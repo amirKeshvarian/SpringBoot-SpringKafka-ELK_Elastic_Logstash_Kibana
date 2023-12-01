@@ -1,0 +1,21 @@
+server.port: 9906
+
+spring:
+  application.name: sequence-generator
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:9001/eureka}
+
+logging:
+  file:
+    name: ${spring.application.name}-${server.port}.log
+  level:
+    org.company.project: debug
+    org.springframework: warn
+  logback:
+    rollingpolicy:
+      max-history: 1
+      max-file-size: 10KB
+      file-name-pattern: ${spring.application.name}-${server.port}-%d{yyyy-MM-dd}.%i.log

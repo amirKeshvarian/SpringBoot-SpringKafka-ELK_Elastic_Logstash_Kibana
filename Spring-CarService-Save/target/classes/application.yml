@@ -1,0 +1,46 @@
+server.port: 9902
+
+spring:
+  application.name: car-service-save
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/orclpdb1
+    username: amir_write
+    password: myjava123
+  kafka:
+#    consumer:
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      group-id: CarService-Save-1
+#      properties:
+#        spring:
+#          json:
+#            trusted:
+#              packages: org.company.project.model.domain
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: localhost:9092
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:9001/eureka}
+
+logging:
+  file:
+    name: ${spring.application.name}-${server.port}.log
+  level:
+    org.company.project: debug
+    org.springframework: warn
+  logback:
+    rollingpolicy:
+      max-history: 1
+      max-file-size: 10KB
+      file-name-pattern: ${spring.application.name}-${server.port}-%d{yyyy-MM-dd}.%i.log
